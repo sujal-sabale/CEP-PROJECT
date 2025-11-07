@@ -1,0 +1,1513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriConnect - Smart Farming Community</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Login Page Video Background -->
+<div class="login-video-bg">
+    <video autoplay muted loop playsinline>
+        <!-- 🔹 Replace this file with your background video -->
+        <source src="Farm.mp4" type="video/mp4">
+        Your browser does not support HTML5 video.
+    </video>
+</div>
+
+
+    
+    <!-- Dashboard Background -->
+    <div class="dashboard-bg"></div>
+    
+    <!-- Header -->
+    <div class="header">
+        <div class="container">
+            <div class="nav">
+                <div class="logo">
+                    <img src="Logo.png!sw800" alt="AgriConnect Logo" class="site-logo">
+                    <div class="logo-text">AgriConnect</div>
+                </div>
+                <div class="nav-right">
+                    <!-- Language Selector -->
+                    <div class="language-selector">
+                        <div class="language-btn" onclick="toggleLanguageDropdown()">
+                            <i class="fas fa-globe"></i>
+                            <span id="currentLanguage">English</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="language-dropdown" id="languageDropdown">
+                            <div class="language-option" onclick="changeLanguage('en')">
+                                <span>🇬🇧 English</span>
+                                <i class="fas fa-check" id="check-en" style="display: none;"></i>
+                            </div>
+                            <div class="language-option" onclick="changeLanguage('hi')">
+                                <span>🇮🇳 हिंदी (Hindi)</span>
+                                <i class="fas fa-check" id="check-hi" style="display: none;"></i>
+                            </div>
+                            <div class="language-option" onclick="changeLanguage('mr')">
+                                <span>🇮🇳 मराठी (Marathi)</span>
+                                <i class="fas fa-check" id="check-mr" style="display: none;"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!--User info-->
+                    <div class="user-info" id="userInfo">
+                        <div class="user-details" onclick="toggleUserDropdown()">
+                            <div class="user-name" id="userName">User Name</div>
+                            <div class="user-role" id="userRole">Role</div>
+                        </div>
+                        <div class="user-avatar" id="userAvatar" onclick="toggleUserDropdown()">U</div>
+                        <div class="user-dropdown" id="userDropdown">
+                            <div class="dropdown-item" onclick="showProfile()">
+                                <i class="fas fa-user"></i>
+                                <span data-translate="myProfile">My Profile</span>
+                            </div>
+                            <div class="dropdown-item" onclick="showSettings()">
+                                <i class="fas fa-cog"></i>
+                                <span data-translate="settings">Settings</span>
+                            </div>
+                            <div class="dropdown-item" onclick="showNotifications()">
+                                <i class="fas fa-bell"></i>
+                                <span data-translate="notifications">Notifications</span>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <div class="dropdown-item" onclick="showHelp()">
+                                <i class="fas fa-question-circle"></i>
+                                <span data-translate="helpSupport">Help & Support</span>
+                            </div>
+                            <div class="dropdown-item" onclick="logout()">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span data-translate="logout">Logout</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Login Page -->
+        <div class="page active" id="loginPage">
+            <div class="login-container">
+                <div class="login-box fade-in">
+                    <h2 data-translate="welcome">Welcome to AgriConnect</h2>
+                    <p data-translate="chooseRole">Choose your role to continue</p>
+                    <div class="login-options">
+                        <div class="login-option" onclick="showFarmerLogin()">
+                            <i class="fas fa-tractor"></i>
+                            <h3 data-translate="farmer">Farmer</h3>
+                            <p data-translate="farmerDesc">Join the farming community, get expert advice, and buy quality products</p>
+                            <button class="btn btn-primary" style="margin-top: 15px;">
+                                <i class="fas fa-user"></i>
+                                <span data-translate="loginFarmer">Login as Farmer</span>
+                            </button>
+                        </div>
+                        <div class="login-option" onclick="showShopkeeperLogin()">
+                            <i class="fas fa-store"></i>
+                            <h3 data-translate="shopkeeper">Shopkeeper</h3>
+                            <p data-translate="shopkeeperDesc">Sell agricultural products and manage your business efficiently</p>
+                            <button class="btn btn-secondary" style="margin-top: 15px;">
+                                <i class="fas fa-user-tie"></i>
+                                <span data-translate="loginShopkeeper">Login as Shopkeeper</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Farmer Login Form -->
+        <div class="page" id="farmerLoginPage">
+            <div class="login-container">
+                <div class="login-form fade-in">
+                    <button class="btn btn-outline" onclick="showLoginPage()" style="margin-bottom: 20px;">
+                        <i class="fas fa-arrow-left"></i>
+                        <span data-translate="back">Back</span>
+                    </button>
+                    <h2 style="text-align: center; margin-bottom: 30px; color: #2d5a27;" data-translate="farmerLogin">Farmer Login</h2>
+                    <div>
+                        <div class="form-group">
+                            <label data-translate="emailAddress">Email Address</label>
+                            <input type="email" id="farmerEmail" data-translate-placeholder="enterEmail" placeholder="Enter your email" required oninput="clearLoginError('farmerEmail')">
+                        </div>
+                        <div class="form-group">
+                            <label data-translate="password">Password</label>
+                            <input type="password" id="farmerPassword" data-translate-placeholder="enterPassword" placeholder="Enter your password (min. 6 characters)" required oninput="clearLoginError('farmerPassword')">
+                            <small style="color: #666; font-size: 12px; display: block; margin-top: 5px;">Password must be at least 6 characters</small>
+                        </div>
+                        <button type="button" class="btn btn-primary" style="width: 100%;" onclick="loginFarmer()">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <span data-translate="loginFarmer">Login as Farmer</span>
+                        </button>
+                    </div>
+                    <div class="success-message" id="farmerLoginSuccess" data-translate="loginSuccess">
+                        Login successful! Redirecting to dashboard...
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shopkeeper Login Form -->
+        <div class="page" id="shopkeeperLoginPage">
+            <div class="login-container">
+                <div class="login-form fade-in">
+                    <button class="btn btn-outline" onclick="showLoginPage()" style="margin-bottom: 20px;">
+                        <i class="fas fa-arrow-left"></i>
+                        <span data-translate="back">Back</span>
+                    </button>
+                    <h2 style="text-align: center; margin-bottom: 30px; color: #2d5a27;" data-translate="shopkeeperLogin">Shopkeeper Login</h2>
+                    <div>
+                        <div class="form-group">
+                            <label data-translate="businessEmail">Business Email</label>
+                            <input type="email" id="shopkeeperEmail" data-translate-placeholder="enterBusinessEmail" placeholder="Enter your business email" required oninput="clearLoginError('shopkeeperEmail')">
+                        </div>
+                        <div class="form-group">
+                            <label data-translate="password">Password</label>
+                            <input type="password" id="shopkeeperPassword" data-translate-placeholder="enterPassword" placeholder="Enter your password (min. 6 characters)" required oninput="clearLoginError('shopkeeperPassword')">
+                            <small style="color: #666; font-size: 12px; display: block; margin-top: 5px;">Password must be at least 6 characters</small>
+                        </div>
+                        <button type="button" class="btn btn-secondary" style="width: 100%;" onclick="loginShopkeeper()">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <span data-translate="loginShopkeeper">Login as Shopkeeper</span>
+                        </button>
+                    </div>
+                    <div class="success-message" id="shopkeeperLoginSuccess" data-translate="loginSuccess">
+                        Login successful! Redirecting to dashboard...
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Farmer Dashboard -->
+        <div class="page" id="farmerDashboard">
+            <div class="dashboard fade-in">
+                <div class="dashboard-header">
+                    <h1>🌾 <span data-translate="farmerDashboard">Farmer Dashboard</span></h1>
+                    <p data-translate="welcomeDashboard">Welcome to your agricultural community hub</p>
+                    <div class="dashboard-nav">
+                        <div class="nav-item active" onclick="showFarmerSection('community')">
+                            <i class="fas fa-users"></i> <span data-translate="community">Community</span>
+                        </div>
+                        <div class="nav-item" onclick="showFarmerSection('weather')">
+                            <i class="fas fa-cloud-sun"></i> <span data-translate="weather">Weather</span>
+                        </div>
+                        <div class="nav-item" onclick="showFarmerSection('trending')">
+                            <i class="fas fa-chart-line"></i> <span data-translate="trendingCrops">Trending Crops</span>
+                        </div>
+                        <div class="nav-item" onclick="showFarmerSection('marketplace')">
+                            <i class="fas fa-shopping-cart"></i> <span data-translate="marketplace">Marketplace</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Community Section -->
+                <div class="dashboard-content active" id="community">
+                    <div class="community-container">
+                        <h3 style="margin-bottom: 25px; color: #2d5a27;">
+                            <i class="fas fa-users"></i> Farming Community
+                        </h3>
+                        
+                        <div class="post-composer">
+                            <h4 style="margin-bottom: 15px;">Share with the community</h4>
+                            <div class="composer-buttons">
+                                <div class="composer-btn" onclick="showPostModal('photo')">
+                                    <i class="fas fa-camera"></i>
+                                    Share Photo
+                                </div>
+                                <div class="composer-btn" onclick="showPostModal('video')">
+                                    <i class="fas fa-video"></i>
+                                    Share Video
+                                </div>
+                                <div class="composer-btn" onclick="showPostModal('question')">
+                                    <i class="fas fa-question-circle"></i>
+                                    Ask Expert
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Feed Posts -->
+                        <div id="communityFeed">
+                            <div class="feed-post">
+                                <div class="post-header">
+                                    <div class="post-avatar">RK</div>
+                                    <div>
+                                        <h4>Raj Kumar</h4>
+                                        <p style="color: #666; font-size: 14px; margin: 0;">2 hours ago • Maharashtra</p>
+                                    </div>
+                                </div>
+                                <p>Just implemented drip irrigation in my wheat field! The water efficiency has improved by 40%. Sharing some photos of the setup. Would love to hear your experiences with modern irrigation techniques. 🌾💧</p>
+                                <div class="post-actions">
+                                    <button class="action-btn">
+                                        <i class="fas fa-thumbs-up"></i> Like (24)
+                                    </button>
+                                    <button class="action-btn">
+                                        <i class="fas fa-comment"></i> Comment (8)
+                                    </button>
+                                    <button class="action-btn">
+                                        <i class="fas fa-share"></i> Share
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="feed-post">
+                                <div class="post-header">
+                                    <div class="post-avatar">SM</div>
+                                    <div>
+                                        <h4>Sunita Mehta</h4>
+                                        <p style="color: #666; font-size: 14px; margin: 0;">4 hours ago • Punjab</p>
+                                    </div>
+                                </div>
+                                <p><strong>Question for experts:</strong> My tomato plants are showing yellow leaves despite proper watering and fertilization. The weather has been humid lately. Could this be a fungal infection? What organic treatments would you recommend? 🍅🤔</p>
+                                <div style="background: #f0f8ff; padding: 15px; border-radius: 10px; margin: 15px 0;">
+                                    <p style="margin: 0; color: #2d5a27;"><strong>Expert Response from Dr. Anil Sharma:</strong></p>
+                                    <p style="margin: 5px 0 0 0;">This could be early blight. Try neem oil spray in the evening and ensure good air circulation. Remove affected leaves immediately.</p>
+                                </div>
+                                <div class="post-actions">
+                                    <button class="action-btn">
+                                        <i class="fas fa-thumbs-up"></i> Like (45)
+                                    </button>
+                                    <button class="action-btn">
+                                        <i class="fas fa-comment"></i> Comment (12)
+                                    </button>
+                                    <button class="action-btn">
+                                        <i class="fas fa-share"></i> Share
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="feed-post">
+                                <div class="post-header">
+                                    <div class="post-avatar">AS</div>
+                                    <div>
+                                        <h4>Amit Singh</h4>
+                                        <p style="color: #666; font-size: 14px; margin: 0;">6 hours ago • Uttar Pradesh</p>
+                                    </div>
+                                </div>
+                                <p>Harvested 50 quintals of sugarcane per acre this season! Here's what worked for me: 1) Proper spacing, 2) Organic manure, 3) Timely pest control. The market prices are good right now at ₹350/quintal. 🎯</p>
+                                <div class="post-actions">
+                                    <button class="action-btn">
+                                        <i class="fas fa-thumbs-up"></i> Like (67)
+                                    </button>
+                                    <button class="action-btn">
+                                        <i class="fas fa-comment"></i> Comment (15)
+                                    </button>
+                                    <button class="action-btn">
+                                        <i class="fas fa-share"></i> Share
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weather Section -->
+                <div class="dashboard-content" id="weather">
+                    <div class="weather-widget">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
+                            <h3 style="margin: 0;">
+                                <i class="fas fa-map-marker-alt"></i> <span id="weatherLocation">Pune, Maharashtra</span>
+                            </h3>
+                            <div style="display: flex; gap: 10px; align-items: center;">
+                                <input type="text" id="weatherCityInput" placeholder="Enter city name" onkeypress="if(event.key === 'Enter') searchWeather()" style="padding: 8px 12px; border: none; border-radius: 8px; background: rgba(255,255,255,0.2); color: white; width: 150px; font-size: 14px;">
+                                <button onclick="searchWeather()" style="padding: 8px 15px; border: none; border-radius: 8px; background: rgba(255,255,255,0.3); color: white; cursor: pointer; font-weight: 600;">
+                                    <i class="fas fa-search"></i> Search
+                                </button>
+                                <button onclick="getCurrentLocationWeather()" style="padding: 8px 15px; border: none; border-radius: 8px; background: rgba(255,255,255,0.3); color: white; cursor: pointer; font-weight: 600;" title="Use current location">
+                                    <i class="fas fa-location-arrow"></i>
+                                </button>
+                                <button onclick="fetchWeather()" style="padding: 8px 15px; border: none; border-radius: 8px; background: rgba(255,255,255,0.3); color: white; cursor: pointer; font-weight: 600;" title="Refresh">
+                                    <i class="fas fa-sync-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div id="weatherLoading" style="display: none; text-align: center; padding: 20px;">
+                            <i class="fas fa-spinner fa-spin" style="font-size: 32px;"></i>
+                            <p>Loading weather data...</p>
+                        </div>
+                        <div id="weatherContent">
+                            <div class="weather-main">
+                                <div>
+                                    <i class="fas fa-sun" id="weatherIcon" style="font-size: 64px; margin-bottom: 10px;"></i>
+                                    <p id="weatherDescription">Sunny</p>
+                                </div>
+                                <div class="weather-temp" id="weatherTemp">28°C</div>
+                            </div>
+                            <div class="weather-details">
+                                <div class="weather-detail">
+                                    <i class="fas fa-eye"></i>
+                                    <p>Visibility</p>
+                                    <strong id="weatherVisibility">10 km</strong>
+                                </div>
+                                <div class="weather-detail">
+                                    <i class="fas fa-tint"></i>
+                                    <p>Humidity</p>
+                                    <strong id="weatherHumidity">65%</strong>
+                                </div>
+                                <div class="weather-detail">
+                                    <i class="fas fa-wind"></i>
+                                    <p>Wind</p>
+                                    <strong id="weatherWind">12 km/h</strong>
+                                </div>
+                                <div class="weather-detail">
+                                    <i class="fas fa-thermometer-half"></i>
+                                    <p>Feels Like</p>
+                                    <strong id="weatherFeelsLike">31°C</strong>
+                                </div>
+                            </div>
+                            <div style="margin-top: 25px; padding: 20px; background: rgba(255,255,255,0.2); border-radius: 15px; backdrop-filter: blur(10px);">
+                                <h4 style="margin-bottom: 15px;">7-Day Forecast</h4>
+                                <div id="weatherForecast" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; text-align: center;">
+                                    <div><p style="margin: 0; font-size: 12px;">Mon</p><i class="fas fa-sun"></i><p style="margin: 5px 0 0 0; font-size: 14px;"><strong>29°</strong></p></div>
+                                    <div><p style="margin: 0; font-size: 12px;">Tue</p><i class="fas fa-cloud-rain"></i><p style="margin: 5px 0 0 0; font-size: 14px;"><strong>26°</strong></p></div>
+                                    <div><p style="margin: 0; font-size: 12px;">Wed</p><i class="fas fa-cloud-sun"></i><p style="margin: 5px 0 0 0; font-size: 14px;"><strong>27°</strong></p></div>
+                                    <div><p style="margin: 0; font-size: 12px;">Thu</p><i class="fas fa-sun"></i><p style="margin: 5px 0 0 0; font-size: 14px;"><strong>30°</strong></p></div>
+                                    <div><p style="margin: 0; font-size: 12px;">Fri</p><i class="fas fa-sun"></i><p style="margin: 5px 0 0 0; font-size: 14px;"><strong>32°</strong></p></div>
+                                    <div><p style="margin: 0; font-size: 12px;">Sat</p><i class="fas fa-cloud"></i><p style="margin: 5px 0 0 0; font-size: 14px;"><strong>28°</strong></p></div>
+                                    <div><p style="margin: 0; font-size: 12px;">Sun</p><i class="fas fa-cloud-rain"></i><p style="margin: 5px 0 0 0; font-size: 14px;"><strong>25°</strong></p></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="weatherError" style="display: none; text-align: center; padding: 20px; background: rgba(255,0,0,0.2); border-radius: 12px; margin-top: 20px;">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p id="weatherErrorMessage">Unable to fetch weather data. Please check your API key or try again later.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trending Crops Section -->
+                <div class="dashboard-content" id="trending">
+                    <div class="trending-section">
+                        <h3 style="margin-bottom: 25px; color: #2d5a27;">
+                            <i class="fas fa-chart-line"></i> Trending Crops & Prices
+                        </h3>
+                        <div class="region-selector">
+                            <label style="display: block; margin-bottom: 10px; font-weight: 600; color: #2d5a27;">Select Region:</label>
+                            <select onchange="updateCropPrices(this.value)">
+                                <option value="maharashtra">Maharashtra</option>
+                                <option value="punjab">Punjab</option>
+                                <option value="uttar-pradesh">Uttar Pradesh</option>
+                                <option value="gujarat">Gujarat</option>
+                                <option value="rajasthan">Rajasthan</option>
+                                <option value="karnataka">Karnataka</option>
+                            </select>
+                        </div>
+                        <div class="crop-grid" id="cropGrid">
+                            <div class="crop-card">
+                                <div class="crop-icon">
+                                    <i class="fas fa-seedling"></i>
+                                </div>
+                                <h4>Wheat</h4>
+                                <div class="crop-price">₹2,150/quintal</div>
+                                <div class="price-trend trend-up">
+                                    <i class="fas fa-arrow-up"></i> +5.2% from last week
+                                </div>
+                            </div>
+                            <div class="crop-card">
+                                <div class="crop-icon">
+                                    <i class="fas fa-corn"></i>
+                                </div>
+                                <h4>Rice</h4>
+                                <div class="crop-price">₹1,890/quintal</div>
+                                <div class="price-trend trend-up">
+                                    <i class="fas fa-arrow-up"></i> +2.8% from last week
+                                </div>
+                            </div>
+                            <div class="crop-card">
+                                <div class="crop-icon">
+                                    <i class="fas fa-carrot"></i>
+                                </div>
+                                <h4>Sugarcane</h4>
+                                <div class="crop-price">₹350/quintal</div>
+                                <div class="price-trend trend-down">
+                                    <i class="fas fa-arrow-down"></i> -1.5% from last week
+                                </div>
+                            </div>
+                            <div class="crop-card">
+                                <div class="crop-icon">
+                                    <i class="fas fa-pepper-hot"></i>
+                                </div>
+                                <h4>Cotton</h4>
+                                <div class="crop-price">₹6,250/quintal</div>
+                                <div class="price-trend trend-up">
+                                    <i class="fas fa-arrow-up"></i> +8.1% from last week
+                                </div>
+                            </div>
+                            <div class="crop-card">
+                                <div class="crop-icon">
+                                    <i class="fas fa-apple-alt"></i>
+                                </div>
+                                <h4>Tomato</h4>
+                                <div class="crop-price">₹1,200/quintal</div>
+                                <div class="price-trend trend-up">
+                                    <i class="fas fa-arrow-up"></i> +12.3% from last week
+                                </div>
+                            </div>
+                            <div class="crop-card">
+                                <div class="crop-icon">
+                                    <i class="fas fa-leaf"></i>
+                                </div>
+                                <h4>Onion</h4>
+                                <div class="crop-price">₹950/quintal</div>
+                                <div class="price-trend trend-down">
+                                    <i class="fas fa-arrow-down"></i> -3.2% from last week
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Marketplace Section -->
+                <div class="dashboard-content" id="marketplace">
+                    <div class="trending-section">
+                        <h3 style="margin-bottom: 25px; color: #2d5a27;">
+                            <i class="fas fa-shopping-cart"></i> Agricultural Marketplace
+                        </h3>
+                        <div class="marketplace-filters">
+                            <div class="filter-row">
+                                <div class="form-group">
+                                    <label>Category</label>
+                                    <select onchange="filterProducts(this.value)">
+                                        <option value="all">All Products</option>
+                                        <option value="fertilizers">Fertilizers</option>
+                                        <option value="seeds">Seeds</option>
+                                        <option value="pesticides">Pesticides</option>
+                                        <option value="tools">Tools</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Price Range</label>
+                                    <select>
+                                        <option>Any Price</option>
+                                        <option>Under ₹500</option>
+                                        <option>₹500 - ₹1000</option>
+                                        <option>₹1000 - ₹2000</option>
+                                        <option>Above ₹2000</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Location</label>
+                                    <select>
+                                        <option>Near Me</option>
+                                        <option>Maharashtra</option>
+                                        <option>Punjab</option>
+                                        <option>Gujarat</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-primary">
+                                        <i class="fas fa-search"></i> Search
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-grid" id="productGrid">
+                            <div class="product-card">
+                                <div class="product-image">
+                                    <i class="fas fa-leaf"></i>
+                                </div>
+                                <div class="product-info">
+                                    <h4>Organic NPK Fertilizer</h4>
+                                    <div class="product-price">₹450/bag (50kg)</div>
+                                    <div class="product-seller">
+                                        <i class="fas fa-store"></i> Green Agriculture Store
+                                    </div>
+                                    <p style="color: #666; font-size: 14px; margin-bottom: 15px;">High-quality organic fertilizer suitable for all crops. Improves soil health and crop yield.</p>
+                                    <div class="product-actions">
+                                        <button class="btn btn-primary">
+                                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                                        </button>
+                                        <button class="btn btn-outline">
+                                            <i class="fas fa-heart"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-card">
+                                <div class="product-image">
+                                    <i class="fas fa-seedling"></i>
+                                </div>
+                                <div class="product-info">
+                                    <h4>Hybrid Wheat Seeds</h4>
+                                    <div class="product-price">₹280/pack (1kg)</div>
+                                    <div class="product-seller">
+                                        <i class="fas fa-store"></i> Premium Seeds Co.
+                                    </div>
+                                    <p style="color: #666; font-size: 14px; margin-bottom: 15px;">High-yielding wheat variety with disease resistance. Perfect for winter sowing.</p>
+                                    <div class="product-actions">
+                                        <button class="btn btn-primary">
+                                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                                        </button>
+                                        <button class="btn btn-outline">
+                                            <i class="fas fa-heart"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-card">
+                                <div class="product-image">
+                                    <i class="fas fa-bug"></i>
+                                </div>
+                                <div class="product-info">
+                                    <h4>Neem-based Pesticide</h4>
+                                    <div class="product-price">₹320/liter</div>
+                                    <div class="product-seller">
+                                        <i class="fas fa-store"></i> BioProtect Solutions
+                                    </div>
+                                    <p style="color: #666; font-size: 14px; margin-bottom: 15px;">Organic pesticide made from neem extract. Safe for crops and environment.</p>
+                                    <div class="product-actions">
+                                        <button class="btn btn-primary">
+                                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                                        </button>
+                                        <button class="btn btn-outline">
+                                            <i class="fas fa-heart"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-card">
+                                <div class="product-image">
+                                    <i class="fas fa-tools"></i>
+                                </div>
+                                <div class="product-info">
+                                    <h4>Garden Tool Kit</h4>
+                                    <div class="product-price">₹1,200/set</div>
+                                    <div class="product-seller">
+                                        <i class="fas fa-store"></i> Farm Tools India
+                                    </div>
+                                    <p style="color: #666; font-size: 14px; margin-bottom: 15px;">Complete set of essential farming tools including spade, hoe, and pruners.</p>
+                                    <div class="product-actions">
+                                        <button class="btn btn-primary">
+                                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                                        </button>
+                                        <button class="btn btn-outline">
+                                            <i class="fas fa-heart"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-card">
+                                <div class="product-image">
+                                    <i class="fas fa-tint"></i>
+                                </div>
+                                <div class="product-info">
+                                    <h4>Drip Irrigation Kit</h4>
+                                    <div class="product-price">₹2,500/kit</div>
+                                    <div class="product-seller">
+                                        <i class="fas fa-store"></i> Water Wise Systems
+                                    </div>
+                                    <p style="color: #666; font-size: 14px; margin-bottom: 15px;">Complete drip irrigation system for 1 acre. Save water and improve efficiency.</p>
+                                    <div class="product-actions">
+                                        <button class="btn btn-primary">
+                                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                                        </button>
+                                        <button class="btn btn-outline">
+                                            <i class="fas fa-heart"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-card">
+                                <div class="product-image">
+                                    <i class="fas fa-flask"></i>
+                                </div>
+                                <div class="product-info">
+                                    <h4>Soil Testing Kit</h4>
+                                    <div class="product-price">₹890/kit</div>
+                                    <div class="product-seller">
+                                        <i class="fas fa-store"></i> AgriTech Labs
+                                    </div>
+                                    <p style="color: #666; font-size: 14px; margin-bottom: 15px;">Professional soil testing kit to check pH, NPK, and other nutrients.</p>
+                                    <div class="product-actions">
+                                        <button class="btn btn-primary">
+                                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                                        </button>
+                                        <button class="btn btn-outline">
+                                            <i class="fas fa-heart"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shopkeeper Dashboard -->
+        <div class="page" id="shopkeeperDashboard">
+            <div class="dashboard fade-in">
+                <div class="dashboard-header">
+                    <h1>🏪 <span data-translate="shopkeeperDashboard">Shopkeeper Dashboard</span></h1>
+                    <p data-translate="manageBusiness">Manage your agricultural business and connect with farmers</p>
+                    <div class="dashboard-nav">
+                        <div class="nav-item active" onclick="showShopkeeperSection('overview')">
+                            <i class="fas fa-chart-pie"></i> <span data-translate="overview">Overview</span>
+                        </div>
+                        <div class="nav-item" onclick="showShopkeeperSection('products')">
+                            <i class="fas fa-box"></i> <span data-translate="myProducts">My Products</span>
+                        </div>
+                        <div class="nav-item" onclick="showShopkeeperSection('orders')">
+                            <i class="fas fa-shopping-bag"></i> <span data-translate="orders">Orders</span>
+                        </div>
+                        <div class="nav-item" onclick="showShopkeeperSection('community')">
+                            <i class="fas fa-users"></i> <span data-translate="community">Community</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Overview Section -->
+                <div class="dashboard-content active" id="overview">
+                    <!-- Time Period Filter -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px;">
+                        <h3 style="color: #2d5a27; margin: 0;">
+                            <i class="fas fa-chart-line"></i> Business Overview
+                        </h3>
+                        <div style="display: flex; gap: 10px;">
+                            <button class="btn" onclick="filterOverview('today')" id="filter-today" style="background: #4CAF50; color: white; padding: 8px 16px;">Today</button>
+                            <button class="btn" onclick="filterOverview('week')" id="filter-week" style="background: #e0e0e0; color: #333; padding: 8px 16px;">This Week</button>
+                            <button class="btn" onclick="filterOverview('month')" id="filter-month" style="background: #e0e0e0; color: #333; padding: 8px 16px;">This Month</button>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card" style="position: relative; overflow: hidden;">
+                            <div style="display: flex; justify-content: space-between; align-items: start;">
+                                <div>
+                                    <div class="stat-number" style="color: #4CAF50;" id="revenue-stat">₹24,850</div>
+                                    <div class="stat-label">Monthly Revenue</div>
+                                    <div style="margin-top: 8px; font-size: 12px; color: #4CAF50;">
+                                        <i class="fas fa-arrow-up"></i> +12.5% from last month
+                                    </div>
+                                </div>
+                                <div style="font-size: 32px; opacity: 0.2;">
+                                    <i class="fas fa-rupee-sign"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="stat-card" style="position: relative; overflow: hidden;">
+                            <div style="display: flex; justify-content: space-between; align-items: start;">
+                                <div>
+                                    <div class="stat-number" style="color: #2196F3;" id="orders-stat">127</div>
+                                    <div class="stat-label">Total Orders</div>
+                                    <div style="margin-top: 8px; font-size: 12px; color: #2196F3;">
+                                        <i class="fas fa-clock"></i> 8 pending
+                                    </div>
+                                </div>
+                                <div style="font-size: 32px; opacity: 0.2;">
+                                    <i class="fas fa-shopping-bag"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="stat-card" style="position: relative; overflow: hidden;">
+                            <div style="display: flex; justify-content: space-between; align-items: start;">
+                                <div>
+                                    <div class="stat-number" style="color: #FF9800;" id="products-stat">18</div>
+                                    <div class="stat-label">Active Products</div>
+                                    <div style="margin-top: 8px; font-size: 12px; color: #f44336;">
+                                        <i class="fas fa-exclamation-triangle"></i> 3 low stock
+                                    </div>
+                                </div>
+                                <div style="font-size: 32px; opacity: 0.2;">
+                                    <i class="fas fa-box"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="stat-card" style="position: relative; overflow: hidden;">
+                            <div style="display: flex; justify-content: space-between; align-items: start;">
+                                <div>
+                                    <div class="stat-number" style="color: #9C27B0;" id="rating-stat">4.8★</div>
+                                    <div class="stat-label">Customer Rating</div>
+                                    <div style="margin-top: 8px; font-size: 12px; color: #666;">
+                                        Based on 156 reviews
+                                    </div>
+                                </div>
+                                <div style="font-size: 32px; opacity: 0.2;">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="trending-section" style="margin-top: 30px;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px;">
+                            <div style="background: white; padding: 25px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                                    <h4 style="margin: 0; color: #2d5a27;">Top Selling Products</h4>
+                                    <button class="btn" style="background: #f0f0f0; color: #333; padding: 6px 12px; font-size: 12px;" onclick="viewAllProducts()">View All</button>
+                                </div>
+                                <div style="margin-bottom: 15px; padding: 12px; background: linear-gradient(90deg, #e8f5e9 0%, transparent 100%); border-left: 4px solid #4CAF50; border-radius: 8px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <span style="font-weight: 600;">Organic Fertilizer</span>
+                                            <div style="font-size: 12px; color: #666; margin-top: 4px;">₹450/bag</div>
+                                        </div>
+                                        <div style="text-align: right;">
+                                            <span style="color: #4CAF50; font-weight: bold; font-size: 18px;">45</span>
+                                            <div style="font-size: 11px; color: #666;">sold</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="margin-bottom: 15px; padding: 12px; background: #f8f9fa; border-radius: 8px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <span style="font-weight: 600;">Wheat Seeds</span>
+                                            <div style="font-size: 12px; color: #666; margin-top: 4px;">₹280/pack</div>
+                                        </div>
+                                        <div style="text-align: right;">
+                                            <span style="color: #4CAF50; font-weight: bold; font-size: 18px;">32</span>
+                                            <div style="font-size: 11px; color: #666;">sold</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="margin-bottom: 15px; padding: 12px; background: #f8f9fa; border-radius: 8px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <span style="font-weight: 600;">Neem Pesticide</span>
+                                            <div style="font-size: 12px; color: #666; margin-top: 4px;">₹320/liter</div>
+                                        </div>
+                                        <div style="text-align: right;">
+                                            <span style="color: #4CAF50; font-weight: bold; font-size: 18px;">28</span>
+                                            <div style="font-size: 11px; color: #666;">sold</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="padding: 12px; background: #f8f9fa; border-radius: 8px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <span style="font-weight: 600;">Tool Kit</span>
+                                            <div style="font-size: 12px; color: #666; margin-top: 4px;">₹1,200/set</div>
+                                        </div>
+                                        <div style="text-align: right;">
+                                            <span style="color: #4CAF50; font-weight: bold; font-size: 18px;">22</span>
+                                            <div style="font-size: 11px; color: #666;">sold</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="background: white; padding: 25px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+                                <h4 style="margin-bottom: 20px; color: #2d5a27;">Recent Activity</h4>
+                                <div style="max-height: 400px; overflow-y: auto;">
+                                    <div style="margin-bottom: 15px; padding: 12px; background: #e3f2fd; border-left: 4px solid #2196F3; border-radius: 8px;">
+                                        <div style="display: flex; align-items: start; gap: 10px;">
+                                            <i class="fas fa-shopping-cart" style="color: #2196F3; margin-top: 4px;"></i>
+                                            <div style="flex: 1;">
+                                                <p style="margin: 0; font-weight: bold; font-size: 14px;">New Order #ORD124</p>
+                                                <p style="margin: 5px 0 0 0; font-size: 13px; color: #666;">Raj Kumar ordered Organic Fertilizer</p>
+                                                <p style="margin: 5px 0 0 0; font-size: 11px; color: #999;">2 minutes ago</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 15px; padding: 12px; background: #fff3e0; border-left: 4px solid #FF9800; border-radius: 8px;">
+                                        <div style="display: flex; align-items: start; gap: 10px;">
+                                            <i class="fas fa-plus-circle" style="color: #FF9800; margin-top: 4px;"></i>
+                                            <div style="flex: 1;">
+                                                <p style="margin: 0; font-weight: bold; font-size: 14px;">Product Added</p>
+                                                <p style="margin: 5px 0 0 0; font-size: 13px; color: #666;">Bio-Pesticide added to inventory</p>
+                                                <p style="margin: 5px 0 0 0; font-size: 11px; color: #999;">1 hour ago</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 15px; padding: 12px; background: #e8f5e9; border-left: 4px solid #4CAF50; border-radius: 8px;">
+                                        <div style="display: flex; align-items: start; gap: 10px;">
+                                            <i class="fas fa-check-circle" style="color: #4CAF50; margin-top: 4px;"></i>
+                                            <div style="flex: 1;">
+                                                <p style="margin: 0; font-weight: bold; font-size: 14px;">Order Delivered</p>
+                                                <p style="margin: 5px 0 0 0; font-size: 13px; color: #666;">Order #ORD119 delivered successfully</p>
+                                                <p style="margin: 5px 0 0 0; font-size: 11px; color: #999;">3 hours ago</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 15px; padding: 12px; background: #f3e5f5; border-left: 4px solid #9C27B0; border-radius: 8px;">
+                                        <div style="display: flex; align-items: start; gap: 10px;">
+                                            <i class="fas fa-star" style="color: #9C27B0; margin-top: 4px;"></i>
+                                            <div style="flex: 1;">
+                                                <p style="margin: 0; font-weight: bold; font-size: 14px;">New Review</p>
+                                                <p style="margin: 5px 0 0 0; font-size: 13px; color: #666;">Amit Singh rated 5 stars</p>
+                                                <p style="margin: 5px 0 0 0; font-size: 11px; color: #999;">5 hours ago</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="background: white; padding: 25px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+                                <h4 style="margin-bottom: 20px; color: #2d5a27;">Quick Actions</h4>
+                                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+                                    <button class="btn btn-primary" onclick="showAddProductModal()" style="padding: 15px; text-align: center; flex-direction: column; gap: 8px;">
+                                        <i class="fas fa-plus" style="font-size: 24px;"></i>
+                                        <span>Add Product</span>
+                                    </button>
+                                    <button class="btn" onclick="showShopkeeperSection('orders')" style="background: #2196F3; color: white; padding: 15px; text-align: center; flex-direction: column; gap: 8px;">
+                                        <i class="fas fa-shopping-bag" style="font-size: 24px;"></i>
+                                        <span>View Orders</span>
+                                    </button>
+                                    <button class="btn" onclick="showShopkeeperSection('community')" style="background: #FF9800; color: white; padding: 15px; text-align: center; flex-direction: column; gap: 8px;">
+                                        <i class="fas fa-bullhorn" style="font-size: 24px;"></i>
+                                        <span>Promote</span>
+                                    </button>
+                                    <button class="btn" onclick="showShopkeeperSection('products')" style="background: #9C27B0; color: white; padding: 15px; text-align: center; flex-direction: column; gap: 8px;">
+                                        <i class="fas fa-box" style="font-size: 24px;"></i>
+                                        <span>Manage</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Products Section -->
+                <div class="dashboard-content" id="products">
+                    <div class="trending-section">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px;">
+                            <h3 style="color: #2d5a27; margin: 0;">
+                                <i class="fas fa-box"></i> My Products
+                            </h3>
+                            <button class="btn btn-primary" onclick="showAddProductModal()">
+                                <i class="fas fa-plus"></i> Add Product
+                            </button>
+                        </div>
+                        
+                        <!-- Search and Filter Bar -->
+                        <div style="display: flex; gap: 15px; margin-bottom: 25px; flex-wrap: wrap; align-items: center;">
+                            <div style="flex: 1; min-width: 200px;">
+                                <input type="text" id="productSearch" placeholder="Search products..." onkeyup="filterProducts()" style="width: 100%; padding: 12px 15px; border: 2px solid #e1e5e9; border-radius: 10px; font-size: 14px;">
+                            </div>
+                            <select id="productCategoryFilter" onchange="filterProducts()" style="padding: 12px 15px; border: 2px solid #e1e5e9; border-radius: 10px; font-size: 14px; min-width: 150px;">
+                                <option value="all">All Categories</option>
+                                <option value="fertilizers">Fertilizers</option>
+                                <option value="seeds">Seeds</option>
+                                <option value="pesticides">Pesticides</option>
+                                <option value="tools">Tools</option>
+                            </select>
+                            <select id="productStockFilter" onchange="filterProducts()" style="padding: 12px 15px; border: 2px solid #e1e5e9; border-radius: 10px; font-size: 14px; min-width: 150px;">
+                                <option value="all">All Stock</option>
+                                <option value="in-stock">In Stock</option>
+                                <option value="low-stock">Low Stock</option>
+                                <option value="out-of-stock">Out of Stock</option>
+                            </select>
+                        </div>
+
+                        <!-- Product Statistics -->
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 25px;">
+                            <div style="background: linear-gradient(135deg, #4CAF50, #45a049); color: white; padding: 20px; border-radius: 12px; text-align: center;">
+                                <div style="font-size: 28px; font-weight: bold;">18</div>
+                                <div style="font-size: 14px; opacity: 0.9;">Total Products</div>
+                            </div>
+                            <div style="background: linear-gradient(135deg, #2196F3, #1976D2); color: white; padding: 20px; border-radius: 12px; text-align: center;">
+                                <div style="font-size: 28px; font-weight: bold;">15</div>
+                                <div style="font-size: 14px; opacity: 0.9;">In Stock</div>
+                            </div>
+                            <div style="background: linear-gradient(135deg, #FF9800, #F57C00); color: white; padding: 20px; border-radius: 12px; text-align: center;">
+                                <div style="font-size: 28px; font-weight: bold;">3</div>
+                                <div style="font-size: 14px; opacity: 0.9;">Low Stock</div>
+                            </div>
+                            <div style="background: linear-gradient(135deg, #f44336, #d32f2f); color: white; padding: 20px; border-radius: 12px; text-align: center;">
+                                <div style="font-size: 28px; font-weight: bold;">0</div>
+                                <div style="font-size: 14px; opacity: 0.9;">Out of Stock</div>
+                            </div>
+                        </div>
+
+                        <div class="product-grid" id="productsGrid">
+                            <div class="product-card" data-product-name="Organic NPK Fertilizer" data-category="fertilizers" data-stock="in-stock">
+                                <div class="product-image" style="position: relative;">
+                                    <i class="fas fa-leaf"></i>
+                                    <span style="position: absolute; top: 10px; right: 10px; background: #4CAF50; color: white; padding: 4px 8px; border-radius: 12px; font-size: 11px; font-weight: bold;">IN STOCK</span>
+                                </div>
+                                <div class="product-info">
+                                    <h4>Organic NPK Fertilizer</h4>
+                                    <div class="product-price">₹450/bag</div>
+                                    <div style="display: flex; align-items: center; gap: 8px; margin: 8px 0;">
+                                        <div style="color: #666; font-size: 14px;">Stock: <strong style="color: #4CAF50;">85 bags</strong></div>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 15px;">
+                                        <div style="color: #FFC107; font-size: 14px;">
+                                            <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star-half-alt"></i>
+                                        </div>
+                                        <span style="color: #666; font-size: 13px;">4.5 (23)</span>
+                                    </div>
+                                    <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+                                        <span style="background: #e3f2fd; color: #1976D2; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 500;">Fertilizers</span>
+                                    </div>
+                                    <div class="product-actions">
+                                        <button class="btn" style="background: #2196F3; color: white; flex: 1;" onclick="viewProduct('product1')" title="View Details">
+                                            <i class="fas fa-eye"></i> View
+                                        </button>
+                                        <button class="btn" style="background: #FFC107; color: #000;" onclick="editProduct('product1')" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn" style="background: #f44336; color: white;" onclick="deleteProduct('product1')" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-card" data-product-name="Hybrid Wheat Seeds" data-category="seeds" data-stock="in-stock">
+                                <div class="product-image" style="position: relative;">
+                                    <i class="fas fa-seedling"></i>
+                                    <span style="position: absolute; top: 10px; right: 10px; background: #4CAF50; color: white; padding: 4px 8px; border-radius: 12px; font-size: 11px; font-weight: bold;">IN STOCK</span>
+                                </div>
+                                <div class="product-info">
+                                    <h4>Hybrid Wheat Seeds</h4>
+                                    <div class="product-price">₹280/pack</div>
+                                    <div style="display: flex; align-items: center; gap: 8px; margin: 8px 0;">
+                                        <div style="color: #666; font-size: 14px;">Stock: <strong style="color: #4CAF50;">120 packs</strong></div>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 15px;">
+                                        <div style="color: #FFC107; font-size: 14px;">
+                                            <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i>
+                                        </div>
+                                        <span style="color: #666; font-size: 13px;">4.7 (31)</span>
+                                    </div>
+                                    <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+                                        <span style="background: #e8f5e9; color: #2d5a27; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 500;">Seeds</span>
+                                    </div>
+                                    <div class="product-actions">
+                                        <button class="btn" style="background: #2196F3; color: white; flex: 1;" onclick="viewProduct('product2')" title="View Details">
+                                            <i class="fas fa-eye"></i> View
+                                        </button>
+                                        <button class="btn" style="background: #FFC107; color: #000;" onclick="editProduct('product2')" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn" style="background: #f44336; color: white;" onclick="deleteProduct('product2')" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-card" data-product-name="Neem-based Pesticide" data-category="pesticides" data-stock="low-stock">
+                                <div class="product-image" style="position: relative;">
+                                    <i class="fas fa-bug"></i>
+                                    <span style="position: absolute; top: 10px; right: 10px; background: #FF9800; color: white; padding: 4px 8px; border-radius: 12px; font-size: 11px; font-weight: bold;">LOW STOCK</span>
+                                </div>
+                                <div class="product-info">
+                                    <h4>Neem-based Pesticide</h4>
+                                    <div class="product-price">₹320/liter</div>
+                                    <div style="display: flex; align-items: center; gap: 8px; margin: 8px 0;">
+                                        <div style="color: #666; font-size: 14px;">Stock: <strong style="color: #FF9800;">45 liters</strong></div>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 15px;">
+                                        <div style="color: #FFC107; font-size: 14px;">
+                                            <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="far fa-star"></i>
+                                        </div>
+                                        <span style="color: #666; font-size: 13px;">4.3 (18)</span>
+                                    </div>
+                                    <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+                                        <span style="background: #fff3e0; color: #E65100; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 500;">Pesticides</span>
+                                    </div>
+                                    <div class="product-actions">
+                                        <button class="btn" style="background: #2196F3; color: white; flex: 1;" onclick="viewProduct('product3')" title="View Details">
+                                            <i class="fas fa-eye"></i> View
+                                        </button>
+                                        <button class="btn" style="background: #FFC107; color: #000;" onclick="editProduct('product3')" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn" style="background: #f44336; color: white;" onclick="deleteProduct('product3')" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Orders Section -->
+                <div class="dashboard-content" id="orders">
+                    <div class="trending-section">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px;">
+                            <h3 style="color: #2d5a27; margin: 0;">
+                                <i class="fas fa-shopping-bag"></i> Order Management
+                            </h3>
+                            <div style="display: flex; gap: 10px;">
+                                <button class="btn" onclick="exportOrders()" style="background: #4CAF50; color: white; padding: 10px 20px;">
+                                    <i class="fas fa-download"></i> Export
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Order Statistics -->
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 25px;">
+                            <div style="background: linear-gradient(135deg, #FF9800, #F57C00); color: white; padding: 20px; border-radius: 12px; text-align: center;">
+                                <div style="font-size: 28px; font-weight: bold;">8</div>
+                                <div style="font-size: 14px; opacity: 0.9;">Pending</div>
+                            </div>
+                            <div style="background: linear-gradient(135deg, #2196F3, #1976D2); color: white; padding: 20px; border-radius: 12px; text-align: center;">
+                                <div style="font-size: 28px; font-weight: bold;">15</div>
+                                <div style="font-size: 14px; opacity: 0.9;">Shipped</div>
+                            </div>
+                            <div style="background: linear-gradient(135deg, #4CAF50, #45a049); color: white; padding: 20px; border-radius: 12px; text-align: center;">
+                                <div style="font-size: 28px; font-weight: bold;">104</div>
+                                <div style="font-size: 14px; opacity: 0.9;">Delivered</div>
+                            </div>
+                            <div style="background: linear-gradient(135deg, #9C27B0, #7B1FA2); color: white; padding: 20px; border-radius: 12px; text-align: center;">
+                                <div style="font-size: 28px; font-weight: bold;">₹24,850</div>
+                                <div style="font-size: 14px; opacity: 0.9;">Total Revenue</div>
+                            </div>
+                        </div>
+
+                        <!-- Order Filters -->
+                        <div style="display: flex; gap: 15px; margin-bottom: 25px; flex-wrap: wrap; align-items: center;">
+                            <div style="flex: 1; min-width: 200px;">
+                                <input type="text" id="orderSearch" placeholder="Search orders by ID, customer, product..." onkeyup="filterOrders()" style="width: 100%; padding: 12px 15px; border: 2px solid #e1e5e9; border-radius: 10px; font-size: 14px;">
+                            </div>
+                            <select id="orderStatusFilter" onchange="filterOrders()" style="padding: 12px 15px; border: 2px solid #e1e5e9; border-radius: 10px; font-size: 14px; min-width: 150px;">
+                                <option value="all">All Status</option>
+                                <option value="pending">Pending</option>
+                                <option value="shipped">Shipped</option>
+                                <option value="delivered">Delivered</option>
+                            </select>
+                            <input type="date" id="orderDateFilter" onchange="filterOrders()" style="padding: 12px 15px; border: 2px solid #e1e5e9; border-radius: 10px; font-size: 14px;">
+                        </div>
+
+                        <div style="overflow-x: auto;">
+                        <table class="orders-table" id="ordersTable">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Customer</th>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>#ORD124</strong></td>
+                                    <td>
+                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                            <div class="post-avatar" style="width: 35px; height: 35px; font-size: 14px;">RK</div>
+                                            <div>
+                                                <p style="margin: 0; font-weight: bold;">Raj Kumar</p>
+                                                <p style="margin: 0; font-size: 12px; color: #666;">Maharashtra</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Organic NPK Fertilizer</td>
+                                    <td>5 bags</td>
+                                    <td><strong>₹2,250</strong></td>
+                                    <td><span class="status-badge status-pending">Pending</span></td>
+                                    <td>20 Sep 2025</td>
+                                    <td>
+                                        <div style="display: flex; gap: 5px;">
+                                            <button class="btn" onclick="shipOrder('ORD124')" style="background: #4CAF50; color: white; padding: 8px 12px; font-size: 12px;">
+                                                <i class="fas fa-truck"></i> Ship
+                                            </button>
+                                            <button class="btn" onclick="viewOrderDetails('ORD124')" style="background: #2196F3; color: white; padding: 8px 12px; font-size: 12px;" title="View Details">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>#ORD123</strong></td>
+                                    <td>
+                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                            <div class="post-avatar" style="width: 35px; height: 35px; font-size: 14px;">SM</div>
+                                            <div>
+                                                <p style="margin: 0; font-weight: bold;">Sunita Mehta</p>
+                                                <p style="margin: 0; font-size: 12px; color: #666;">Punjab</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Hybrid Wheat Seeds</td>
+                                    <td>3 packs</td>
+                                    <td><strong>₹840</strong></td>
+                                    <td><span class="status-badge status-shipped">Shipped</span></td>
+                                    <td>19 Sep 2025</td>
+                                    <td>
+                                        <div style="display: flex; gap: 5px;">
+                                            <button class="btn" onclick="trackOrder('ORD123')" style="background: #2196F3; color: white; padding: 8px 12px; font-size: 12px;">
+                                                <i class="fas fa-map-marker-alt"></i> Track
+                                            </button>
+                                            <button class="btn" onclick="viewOrderDetails('ORD123')" style="background: #666; color: white; padding: 8px 12px; font-size: 12px;" title="View Details">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>#ORD122</strong></td>
+                                    <td>
+                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                            <div class="post-avatar" style="width: 35px; height: 35px; font-size: 14px;">AS</div>
+                                            <div>
+                                                <p style="margin: 0; font-weight: bold;">Amit Singh</p>
+                                                <p style="margin: 0; font-size: 12px; color: #666;">UP</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Garden Tool Kit</td>
+                                    <td>1 set</td>
+                                    <td><strong>₹1,200</strong></td>
+                                    <td><span class="status-badge status-delivered">Delivered</span></td>
+                                    <td>18 Sep 2025</td>
+                                    <td>
+                                        <button class="btn" onclick="viewOrderDetails('ORD122')" style="background: #666; color: white; padding: 8px 12px; font-size: 12px;">
+                                            <i class="fas fa-eye"></i> Details
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>#ORD121</strong></td>
+                                    <td>
+                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                            <div class="post-avatar" style="width: 35px; height: 35px; font-size: 14px;">PK</div>
+                                            <div>
+                                                <p style="margin: 0; font-weight: bold;">Priya Kumari</p>
+                                                <p style="margin: 0; font-size: 12px; color: #666;">Bihar</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Neem Pesticide</td>
+                                    <td>2 liters</td>
+                                    <td><strong>₹640</strong></td>
+                                    <td><span class="status-badge status-delivered">Delivered</span></td>
+                                    <td>17 Sep 2025</td>
+                                    <td>
+                                        <button class="btn" onclick="viewOrderDetails('ORD121')" style="background: #666; color: white; padding: 8px 12px; font-size: 12px;">
+                                            <i class="fas fa-eye"></i> Details
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>#ORD120</strong></td>
+                                    <td>
+                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                            <div class="post-avatar" style="width: 35px; height: 35px; font-size: 14px;">VS</div>
+                                            <div>
+                                                <p style="margin: 0; font-weight: bold;">Vikram Sharma</p>
+                                                <p style="margin: 0; font-size: 12px; color: #666;">Rajasthan</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Drip Irrigation Kit</td>
+                                    <td>1 kit</td>
+                                    <td><strong>₹2,500</strong></td>
+                                    <td><span class="status-badge status-shipped">Shipped</span></td>
+                                    <td>16 Sep 2025</td>
+                                    <td>
+                                        <div style="display: flex; gap: 5px;">
+                                            <button class="btn" onclick="trackOrder('ORD120')" style="background: #2196F3; color: white; padding: 8px 12px; font-size: 12px;">
+                                                <i class="fas fa-map-marker-alt"></i> Track
+                                            </button>
+                                            <button class="btn" onclick="viewOrderDetails('ORD120')" style="background: #666; color: white; padding: 8px 12px; font-size: 12px;" title="View Details">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Community Section for Shopkeepers -->
+                <div class="dashboard-content" id="shopkeeper-community">
+                    <div class="community-container">
+                        <h3 style="margin-bottom: 25px; color: #2d5a27;">
+                            <i class="fas fa-users"></i> Business Community
+                        </h3>
+                        
+                        <div class="post-composer">
+                            <h4 style="margin-bottom: 15px;">Share your products with farmers</h4>
+                            <div class="composer-buttons">
+                                <div class="composer-btn" onclick="showProductPostModal()">
+                                    <i class="fas fa-box"></i>
+                                    Promote Product
+                                </div>
+                                <div class="composer-btn" onclick="showOfferModal()">
+                                    <i class="fas fa-percent"></i>
+                                    Create Offer
+                                </div>
+                                <div class="composer-btn" onclick="showTipModal()">
+                                    <i class="fas fa-lightbulb"></i>
+                                    Share Tip
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Community Feed for Shopkeepers -->
+                        <div id="shopkeeperFeed">
+                            <div class="feed-post">
+                                <div class="post-header">
+                                    <div class="post-avatar" style="background: linear-gradient(45deg, #2196F3, #1976D2);">GS</div>
+                                    <div>
+                                        <h4>Green Agriculture Store</h4>
+                                        <p style="color: #666; font-size: 14px; margin: 0;">3 hours ago • Verified Seller</p>
+                                    </div>
+                                </div>
+                                <p><strong>🎯 Special Offer Alert!</strong> Get 15% off on all organic fertilizers this week! Perfect timing for your winter crop preparation. Limited stock available - first come, first served! 🌱</p>
+                                <div style="background: #e8f5e8; padding: 15px; border-radius: 10px; margin: 15px 0;">
+                                    <p style="margin: 0; font-weight: bold; color: #2d5a27;">Offer Code: ORGANIC15</p>
+                                    <p style="margin: 5px 0 0 0; color: #666;">Valid till: 25th September 2025</p>
+                                </div>
+                                <div class="post-actions">
+                                    <button class="action-btn">
+                                        <i class="fas fa-thumbs-up"></i> Like (89)
+                                    </button>
+                                    <button class="action-btn">
+                                        <i class="fas fa-comment"></i> Comment (23)
+                                    </button>
+                                    <button class="action-btn">
+                                        <i class="fas fa-share"></i> Share
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="feed-post">
+                                <div class="post-header">
+                                    <div class="post-avatar" style="background: linear-gradient(45deg, #FF9800, #F57C00);">PS</div>
+                                    <div>
+                                        <h4>Premium Seeds Co.</h4>
+                                        <p style="color: #666; font-size: 14px; margin: 0;">5 hours ago • Verified Seller</p>
+                                    </div>
+                                </div>
+                                <p><strong>🌾 Farming Tip Tuesday:</strong> For maximum wheat yield, maintain 22-25cm row spacing and ensure proper seed depth of 3-5cm. Our hybrid seeds perform best with this technique. Happy farming! 📈</p>
+                                <div class="post-actions">
+                                    <button class="action-btn">
+                                        <i class="fas fa-thumbs-up"></i> Like (156)
+                                    </button>
+                                    <button class="action-btn">
+                                        <i class="fas fa-comment"></i> Comment (45)
+                                    </button>
+                                    <button class="action-btn">
+                                        <i class="fas fa-share"></i> Share
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="feed-post">
+                                <div class="post-header">
+                                    <div class="post-avatar" style="background: linear-gradient(45deg, #4CAF50, #45a049);">BP</div>
+                                    <div>
+                                        <h4>BioProtect Solutions</h4>
+                                        <p style="color: #666; font-size: 14px; margin: 0;">8 hours ago • Verified Seller</p>
+                                    </div>
+                                </div>
+                                <p>🔬 <strong>New Product Launch:</strong> Introducing our advanced bio-pesticide formula! Made from natural neem extracts, it's 40% more effective against common pests while being completely safe for crops and soil. Now available for pre-order!</p>
+                                <div class="post-actions">
+                                    <button class="action-btn">
+                                        <i class="fas fa-thumbs-up"></i> Like (72)
+                                    </button>
+                                    <button class="action-btn">
+                                        <i class="fas fa-comment"></i> Comment (18)
+                                    </button>
+                                    <button class="action-btn">
+                                        <i class="fas fa-share"></i> Share
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <button class="fab" id="fab">
+        <i class="fas fa-plus"></i>
+    </button>
+
+    <!-- Modals -->
+    
+    <!-- Post Modal for Farmers -->
+    <div class="modal" id="postModal">
+        <div class="modal-content">
+            <h3>Share with Community</h3>
+            <form>
+                <div class="form-group">
+                    <label>Post Type</label>
+                    <select id="postType">
+                        <option value="photo">Share Photo</option>
+                        <option value="video">Share Video</option>
+                        <option value="question">Ask Expert</option>
+                        <option value="update">General Update</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Upload Media (Optional)</label>
+                    <input type="file" id="postMedia" accept="image/*,video/*">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="postDescription" rows="4" placeholder="Share your farming experience, ask questions, or update the community..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" id="postLocation" placeholder="Your location (optional)">
+                </div>
+                <div style="display: flex; gap: 15px; justify-content: flex-end; margin-top: 25px;">
+                    <button type="button" class="btn" style="background: #666; color: white;" onclick="closeModal('postModal')">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="submitPost()">Post</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Shopkeeper Post Modals -->
+    
+    <!-- Promote Product Modal -->
+    <div class="modal" id="productPostModal">
+        <div class="modal-content">
+            <h3>Promote Product</h3>
+            <form>
+                <div class="form-group">
+                    <label>Product Name</label>
+                    <input type="text" id="productPostName" placeholder="Enter product name" required>
+                </div>
+                <div class="form-group">
+                    <label>Product Image (Optional)</label>
+                    <input type="file" id="productPostImage" accept="image/*">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="productPostDescription" rows="4" placeholder="Describe your product, its benefits, and why farmers should buy it..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Price</label>
+                    <input type="text" id="productPostPrice" placeholder="e.g., ₹450/bag">
+                </div>
+                <div style="display: flex; gap: 15px; justify-content: flex-end; margin-top: 25px;">
+                    <button type="button" class="btn" style="background: #666; color: white;" onclick="closeModal('productPostModal')">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="submitProductPost()">Post</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Create Offer Modal -->
+    <div class="modal" id="offerModal">
+        <div class="modal-content">
+            <h3>Create Special Offer</h3>
+            <form>
+                <div class="form-group">
+                    <label>Offer Title</label>
+                    <input type="text" id="offerTitle" placeholder="e.g., 15% off on Organic Fertilizers" required>
+                </div>
+                <div class="form-group">
+                    <label>Discount/Offer Details</label>
+                    <textarea id="offerDescription" rows="3" placeholder="Describe your offer, discount percentage, applicable products..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Offer Code (Optional)</label>
+                    <input type="text" id="offerCode" placeholder="e.g., ORGANIC15">
+                </div>
+                <div class="form-group">
+                    <label>Valid Till</label>
+                    <input type="date" id="offerValidTill">
+                </div>
+                <div class="form-group">
+                    <label>Additional Message</label>
+                    <textarea id="offerMessage" rows="2" placeholder="Any additional information about the offer..."></textarea>
+                </div>
+                <div style="display: flex; gap: 15px; justify-content: flex-end; margin-top: 25px;">
+                    <button type="button" class="btn" style="background: #666; color: white;" onclick="closeModal('offerModal')">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="submitOfferPost()">Create Offer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Share Tip Modal -->
+    <div class="modal" id="tipModal">
+        <div class="modal-content">
+            <h3>Share Farming Tip</h3>
+            <form>
+                <div class="form-group">
+                    <label>Tip Title</label>
+                    <input type="text" id="tipTitle" placeholder="e.g., Best practices for wheat farming" required>
+                </div>
+                <div class="form-group">
+                    <label>Tip Content</label>
+                    <textarea id="tipContent" rows="5" placeholder="Share your farming tips, best practices, or advice for farmers..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="tipCategory">
+                        <option value="general">General Farming</option>
+                        <option value="crops">Crop Management</option>
+                        <option value="pest">Pest Control</option>
+                        <option value="irrigation">Irrigation</option>
+                        <option value="fertilizer">Fertilizer Usage</option>
+                        <option value="harvest">Harvesting</option>
+                    </select>
+                </div>
+                <div style="display: flex; gap: 15px; justify-content: flex-end; margin-top: 25px;">
+                    <button type="button" class="btn" style="background: #666; color: white;" onclick="closeModal('tipModal')">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="submitTipPost()">Share Tip</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Product Modal -->
+    <div class="modal" id="addProductModal">
+        <div class="modal-content">
+            <h3>Add New Product</h3>
+            <form>
+                <div class="form-group">
+                    <label>Product Name</label>
+                    <input type="text" placeholder="Enter product name" required>
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select required>
+                        <option value="">Select Category</option>
+                        <option value="fertilizers">Fertilizers</option>
+                        <option value="seeds">Seeds</option>
+                        <option value="pesticides">Pesticides</option>
+                        <option value="tools">Tools</option>
+                        <option value="irrigation">Irrigation Equipment</option>
+                        <option value="others">Others</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Price</label>
+                    <input type="number" placeholder="Enter price" required>
+                </div>
+                <div class="form-group">
+                    <label>Unit</label>
+                    <select required>
+                        <option value="">Select Unit</option>
+                        <option value="kg">Per KG</option>
+                        <option value="bag">Per Bag</option>
+                        <option value="liter">Per Liter</option>
+                        <option value="piece">Per Piece</option>
+                        <option value="set">Per Set</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Stock Quantity</label>
+                    <input type="number" placeholder="Available quantity" required>
+                </div>
+                <div class="form-group">
+                    <label>Product Image</label>
+                    <input type="file" accept="image/*" required>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea rows="3" placeholder="Product description, benefits, usage instructions..."></textarea>
+                </div>
+                <div style="display: flex; gap: 15px; justify-content: flex-end; margin-top: 25px;">
+                    <button type="button" class="btn" style="background: #666; color: white;" onclick="closeModal('addProductModal')">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="addProduct()">Add Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    
+    <script src="script.js"></script>
+</body>
+</html>
+                                
